@@ -10,10 +10,10 @@ document.querySelector("#mass_delete").onclick = async function(event) {
 
     // Delete Products
 
-    massDelete('/scandiweb/product/massdelete', toDelete).then(function(response) {
+    massDelete('/scandiweb/product/massdelete', toDelete).then((response) => {
             return response.json();
         })
-        .then(function(body) {
+        .then((body) => {
             body.map((ElemtoDeleteFromUI) => {
 
                 document.querySelector("#" + ElemtoDeleteFromUI).remove();

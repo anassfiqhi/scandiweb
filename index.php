@@ -1,6 +1,7 @@
 <?php
 
 use Vendor\Model\Book;
+use Vendor\Model\Disc;
 use Vendor\Model\Furniture;
 use Vendor\Model\Product;
 use Vendor\Route\RouteFactory;
@@ -9,9 +10,94 @@ spl_autoload_register(function($class) {
     include_once str_replace('\\', '/', $class) . '.php';
 });
 
-  RouteFactory::set("product",function($sku){
+  RouteFactory::set("addproduct",function($sku){
 
-    echo "Product sku = ".$sku;
+    if( isset( $_POST['sku'] ) ){
+      $sku = $_POST['sku'];
+    } else {
+      die();
+    }
+
+    if( isset( $_POST['name'] ) ){
+      $name = $_POST['name'];
+    } else {
+      die();
+    }
+
+    if( isset( $_POST['price'] ) ){
+      $price = floatval($_POST['price']);
+    } else {
+      die();
+    }
+
+    if( isset( $_POST['type'] ) ){
+      $type = $_POST['type'];
+    } else {
+      die();
+    }
+
+
+    if ( $type == "Book") {
+
+        if( isset($_POST['weight']) ){
+          $weight = floatval(  $_POST['weight']  );
+
+          $book = new Book();
+
+          $book->setSku($sku);
+          $book->setName($name);
+          $book->setPrice($price);  
+          $book->setWeight($weight);
+
+          echo json_encode($book->save());
+
+        } else {
+          die();
+        }
+
+    } elseif ( $type == "Disc") {
+
+        if( isset($_POST['size']) ){
+          $size = floatval(  $_POST['size']  );
+
+          $disc = new Disc();
+          $disc->setSku($sku);
+          $disc->setName($name);
+          $disc->setPrice($price);
+          $disc->setSize($size);
+
+          echo json_encode($disc->save());
+
+        } else {
+          die();
+        }
+
+    } elseif ( $type == "Furniture") {
+
+        if( isset($_POST['height']) &&
+         isset($_POST['width']) &&
+          isset($_POST['length']) ){
+
+            $height = floatval(  $_POST['height']  );
+            $width = floatval(  $_POST['width']  );
+            $length = floatval(  $_POST['length']  );
+
+            $furniture = new Furniture();
+
+            $furniture->setSku($sku);
+            $furniture->setName($name);
+            $furniture->setPrice($price);  
+            $furniture->setHeight($height);
+            $furniture->setWidth($width);
+            $furniture->setLength($length);
+
+            echo json_encode($furniture->save());
+
+        } else {
+          die();
+        }
+
+    }
 
     die();
 
@@ -23,28 +109,6 @@ spl_autoload_register(function($class) {
     include_once "Vendor/View/addView.php";
 
     die();
-    
-    $book = new Book();
-
-    $book->setSku("BKENGGRAMRHHHHH");
-    $book->setName("ENGLISH GRAMMAR");
-    $book->setPrice(15);  
-    $book->setWeight(.8);
-
-    echo json_encode($book->save());
-    
-    // $furniture = new Furniture();
-
-    // $furniture->setSku("FRNTR001");
-    // $furniture->setName("Family Size Table");
-    // $furniture->setPrice(150);  
-    // $furniture->setWidth(2);
-    // $furniture->setLength(3);
-    // $furniture->setHeight(1.2);
-
-    // echo json_encode($furniture->save());
-
-    die();
 
   });
 
@@ -54,24 +118,6 @@ spl_autoload_register(function($class) {
     $products = (Product::getProducts());
 
     include_once "Vendor/View/listView.php";
-
-    die();
-
-  });
-
-
-  RouteFactory::set("delete",function($sku){
-
-    echo "delete Route ".$sku;
-
-    die();
-
-  });
-
-
-  RouteFactory::set("getsingleproduct",function($sku){
-
-    echo "Single product Route ".$sku;
 
     die();
 

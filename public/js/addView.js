@@ -1,3 +1,24 @@
+let skuInput = document.querySelector("#sku");
+let nameInput = document.querySelector("#name");
+let priceInput = document.querySelector("#price");
+let typeInput = document.querySelector("#type");
+let container = null;
+
+let labelWeight = null;
+let inputWeight = null;
+
+let labelSize = null;
+let inputSize = null;
+
+let labelHeight = null;
+let inputHeight = null;
+
+let labelWidth = null;
+let inputWidth = null;
+
+let labelLength = null;
+let inputLength = null;
+
 document.querySelector("#type").onchange = function(event) {
     let type = event.currentTarget.value;
 
@@ -8,16 +29,16 @@ document.querySelector("#type").onchange = function(event) {
 
     if (type == "Book") {
 
-        let container = document.createElement("div");
+        container = document.createElement("div");
         container.classList.add(...["m-5", "grid", "grid-cols-2"]);
 
-        let labelWeight = document.createElement("label");
+        labelWeight = document.createElement("label");
         labelWeight.innerText = "Weight (KG)";
         labelWeight.htmlFor = "weight";
         container.append(labelWeight);
 
 
-        let inputWeight = document.createElement("input");
+        inputWeight = document.createElement("input");
         inputWeight.id = "weight";
         inputWeight.type = "text";
         inputWeight.required = true;
@@ -34,16 +55,16 @@ document.querySelector("#type").onchange = function(event) {
 
     } else if (type == "Disc") {
 
-        let container = document.createElement("div");
+        container = document.createElement("div");
         container.classList.add(...["m-5", "grid", "grid-cols-2"]);
 
-        let labelSize = document.createElement("label");
+        labelSize = document.createElement("label");
         labelSize.innerText = "Size (MB)";
         labelSize.htmlFor = "size";
         container.append(labelSize);
 
 
-        let inputSize = document.createElement("input");
+        inputSize = document.createElement("input");
         inputSize.id = "size";
         inputSize.type = "text";
         inputSize.required = true;
@@ -60,16 +81,16 @@ document.querySelector("#type").onchange = function(event) {
 
     } else if (type == "Furniture") {
 
-        let container = document.createElement("div");
+        container = document.createElement("div");
         container.classList.add(...["m-5", "grid", "grid-cols-2"]);
 
-        let labelHeight = document.createElement("label");
+        labelHeight = document.createElement("label");
         labelHeight.innerText = "Height (CM)";
         labelHeight.htmlFor = "height";
         container.append(labelHeight);
 
 
-        let inputHeight = document.createElement("input");
+        inputHeight = document.createElement("input");
         inputHeight.id = "height";
         inputHeight.type = "text";
         inputHeight.required = true;
@@ -83,12 +104,12 @@ document.querySelector("#type").onchange = function(event) {
         container = document.createElement("div");
         container.classList.add(...["m-5", "grid", "grid-cols-2"]);
 
-        let labelWidth = document.createElement("label");
+        labelWidth = document.createElement("label");
         labelWidth.innerText = "Width (CM)";
         labelWidth.htmlFor = "width";
         container.append(labelWidth);
 
-        let inputWidth = document.createElement("input");
+        inputWidth = document.createElement("input");
         inputWidth.id = "width";
         inputWidth.type = "text";
         inputWidth.required = true;
@@ -101,12 +122,12 @@ document.querySelector("#type").onchange = function(event) {
         container = document.createElement("div");
         container.classList.add(...["m-5", "grid", "grid-cols-2"]);
 
-        let labelLength = document.createElement("label");
+        labelLength = document.createElement("label");
         labelLength.innerText = "Length (CM)";
         labelLength.htmlFor = "length";
         container.append(labelLength);
 
-        let inputLength = document.createElement("input");
+        inputLength = document.createElement("input");
         inputLength.id = "length";
         inputLength.type = "text";
         inputLength.required = true;
@@ -127,7 +148,48 @@ document.querySelector("#type").onchange = function(event) {
 document.querySelector("#save").onclick = function(event) {
     submit.click();
     console.log("Submitted!");
+    add('/scandiweb/product/addproduct').then((response) => {
+            return response.text();
+        })
+        .then((body) => {
+            console.log(body);
+        });
 
 
+}
+
+
+/**
+ * @param {String}url
+ * @param {Array<string>}skuArray
+ * 
+ * @return {Promise}
+ */
+async function add(url) {
+
+    let formData = new FormData();
+
+    formData.append('sku', skuInput.value);
+    formData.append('name', nameInput.value);
+    formData.append('price', priceInput.value);
+    formData.append('type', typeInput.value);
+
+    if (typeInput.value == "Book") {
+
+        formData.append('weight', inputWeight.value);
+
+    } else if (typeInput.value == "Disc") {
+
+        formData.append('size', inputSize.value);
+
+    } else if (typeInput.value == "Furniture") {
+
+        formData.append('height', inputHeight.value);
+        formData.append('width', inputWidth.value);
+        formData.append('length', inputLength.value);
+
+    }
+
+    return await fetch(url, { method: 'POST', body: formData })
 
 }

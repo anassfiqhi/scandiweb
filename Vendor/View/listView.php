@@ -24,7 +24,7 @@
         <section class="flex-auto flex flex-row flex-wrap justify-center content-start" style="height: 400px!important;overflow: scroll;">
 
             <?php
-                foreach ($products as $key => $value) { 
+                foreach ($products as $key => $value) {
             ?> 
                 <div id="<?=$value["sku"]?>" class="product p-3 m-2 border-2 border-black w-min cursor-pointer select-none" style="height: fit-content;width: fit-content;">
                     <input type="checkbox" value="<?=$value["sku"]?>" class="pointer-events-none" />
@@ -37,8 +37,8 @@
                                 if($value["productType"] == "Book"){
                                     echo "Weight : ".$value["weight"]." KG";
                                 }
-                                elseif($value["productType"] == "Disk"){
-                                    echo "Size : ".$value["size"]." MB";
+                                elseif($value["productType"] == "Disc"){
+                                    echo "Size : ".number_format ( $value["size"] )." MB";
                                 }elseif($value["productType"] == "Furniture"){
                                     echo "Dimension : ".$value["width"]."x".$value["height"]."x".$value["length"];
                                 }
