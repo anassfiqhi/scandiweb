@@ -107,7 +107,7 @@ spl_autoload_register(function($class) {
 
     $products = Product::getProducts();
 
-    include_once "Vendor/View/ListView.php";
+    include_once "Vendor/View/listView.php";
 
     die();
     

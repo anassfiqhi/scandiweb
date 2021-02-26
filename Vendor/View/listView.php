@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Product List</title>
-        <!-- Bootstrap CSS -->
+        <!-- TailWind CSS -->
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     </head>
 
@@ -55,7 +55,7 @@
         <footer class="flex-none border-t-2 border-black m-3">
             <div class="text-center w-full">ScandiWeb Test assignment</div>
         </footer>
-        <script src="/scandiweb/public/list.js" defer></script>
+        <script src="/scandiweb/public/js/listView.js" defer></script>
     </body>
 
     </html>
