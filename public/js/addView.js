@@ -154,8 +154,7 @@ document.querySelector("#save").onclick = function(event) {
             return response?.text();
         })
         .then((body) => {
-            console.log(body);
-            // location.href = "/scandiweb/product/list";
+            console.log(body?location.href = "/scandiweb/product/list":body);
         });
 }
 
