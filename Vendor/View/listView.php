@@ -26,7 +26,7 @@
             <?php
                 foreach ($products as $key => $value) {
             ?> 
-                <div id="<?=$value["sku"]?>" class="product p-3 m-2 border-2 border-black w-min cursor-pointer select-none" style="height: fit-content;width: fit-content;">
+                <div id="product_<?=$value["sku"]?>" class="product p-3 m-2 border-2 border-black w-min cursor-pointer select-none" style="height: fit-content;width: fit-content;">
                     <input type="checkbox" value="<?=$value["sku"]?>" class="pointer-events-none" />
                     <div class="text-center">
                         <div> <?=$value["sku"]?> </div>

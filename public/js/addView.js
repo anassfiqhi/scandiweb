@@ -155,10 +155,8 @@ document.querySelector("#save").onclick = function(event) {
         })
         .then((body) => {
             console.log(body);
+            // location.href = "/scandiweb/product/list";
         });
-
-
-    location.href = "/scandiweb/product/list";
 }
 
 
@@ -172,7 +170,7 @@ async function add(url) {
 
     let formData = new FormData();
 
-    if (skuInput.value && nameInput.value && priceInput.value && typeInput.value) {
+    if (skuInput.value != "" && nameInput.value != "" && priceInput.value != "" && typeInput.value != "") {
 
         formData.append('sku', skuInput.value);
         formData.append('name', nameInput.value);
@@ -181,7 +179,7 @@ async function add(url) {
 
         if (typeInput.value == "Book") {
 
-            if (inputWeight.value) {
+            if (inputWeight.value != "" && parseFloat(inputWeight.value) >= 0 ) {
 
                 formData.append('weight', inputWeight.value);
 
@@ -191,7 +189,7 @@ async function add(url) {
 
         } else if (typeInput.value == "Disc") {
 
-            if (inputSize.value) {
+            if (inputSize.value != "" && parseFloat(inputSize.value) >= 0 ) {
 
                 formData.append('size', inputSize.value);
 
@@ -201,7 +199,7 @@ async function add(url) {
 
         } else if (typeInput.value == "Furniture") {
 
-            if (inputHeight.value && inputWidth.value && inputLength.value) {
+            if (inputHeight.value != "" && parseFloat( inputHeight.value ) >= 0 && inputWidth.value != "" && parseFloat( inputWidth.value ) >= 0 && inputLength.value != "" && parseFloat(inputLength.value) >= 0 ) {
 
                 formData.append('height', inputHeight.value);
                 formData.append('width', inputWidth.value);

@@ -1,10 +1,11 @@
 RewriteEngine On
 
-RewriteRule post post.php [L]
 RewriteRule product/list index.php?route=list [L]
-RewriteRule product/add index.php?route=add [L]
 RewriteRule product/massdelete index.php?route=massdelete [L]
-RewriteRule ^product/delete/([a-zA-Z0-9]+)$ index.php?route=delete&sku=$1 [L]
-RewriteRule ^product/([a-zA-Z0-9]+)$ index.php?route=getsingleproduct&sku=$1 [L]
+RewriteRule product/addproduct index.php?route=addproduct [L]
+RewriteRule product/add index.php?route=add [L]
+
+RewriteRule .env index.php?route=list [L]
+RewriteRule ^[A-Za-z-0-9]+.sql$ index.php?route=list [L]
 
 RewriteCond %{DOCUMENT_ROOT}/public/ -f

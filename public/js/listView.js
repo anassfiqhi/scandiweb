@@ -16,7 +16,7 @@ document.querySelector("#mass_delete").onclick = async function(event) {
         .then((body) => {
             body.map((ElemtoDeleteFromUI) => {
 
-                document.querySelector("#" + ElemtoDeleteFromUI).remove();
+                document.querySelector("#product_" + ElemtoDeleteFromUI).remove();
 
             });
         });
