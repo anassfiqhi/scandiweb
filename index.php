@@ -1,36 +1,38 @@
 <?php
 
+use Vendor\Route\RouteFactory;
+use Vendor\Model\Product;
 use Vendor\Model\Book;
 use Vendor\Model\Disc;
 use Vendor\Model\Furniture;
-use Vendor\Model\Product;
-use Vendor\Route\RouteFactory;
 
+//auto including dependencies 
 spl_autoload_register(function($class) {
     include_once str_replace('\\', '/', $class) . '.php';
 });
 
+  // End point for adding new product
   RouteFactory::set("addproduct",function($sku){
 
-    if( isset( $_POST['sku'] ) ){
+    if( isset( $_POST['sku'] ) && !empty( $_POST['sku'] && $_POST['sku'] != "" ) ){
       $sku = $_POST['sku'];
     } else {
       die();
     }
 
-    if( isset( $_POST['name'] ) ){
+    if( isset( $_POST['name'] ) && !empty( $_POST['name'] && $_POST['name'] != ""  ) ){
       $name = $_POST['name'];
     } else {
       die();
     }
 
-    if( isset( $_POST['price'] ) ){
+    if( isset( $_POST['price'] ) && !empty( $_POST['price'] && $_POST['price'] != "" ) ){
       $price = floatval($_POST['price']);
     } else {
       die();
     }
 
-    if( isset( $_POST['type'] ) ){
+    if( isset( $_POST['type'] ) && !empty( $_POST['type'] && $_POST['type'] != "" ) ){
       $type = $_POST['type'];
     } else {
       die();
@@ -39,7 +41,7 @@ spl_autoload_register(function($class) {
 
     if ( $type == "Book") {
 
-        if( isset($_POST['weight']) ){
+        if( isset($_POST['weight']) && !empty($_POST['weight'] && $_POST['weight'] != "" ) ){
           $weight = floatval(  $_POST['weight']  );
 
           $book = new Book();
@@ -57,7 +59,7 @@ spl_autoload_register(function($class) {
 
     } elseif ( $type == "Disc") {
 
-        if( isset($_POST['size']) ){
+        if( isset($_POST['size']) && !empty($_POST['size']) && $_POST['size'] != "" ){
           $size = floatval(  $_POST['size']  );
 
           $disc = new Disc();
@@ -74,9 +76,11 @@ spl_autoload_register(function($class) {
 
     } elseif ( $type == "Furniture") {
 
-        if( isset($_POST['height']) &&
-         isset($_POST['width']) &&
-          isset($_POST['length']) ){
+        if( isset($_POST['height']) && !empty($_POST['height']) && $_POST['height'] != ""  &&
+
+         isset($_POST['width']) && !empty($_POST['width']) && $_POST['width'] != ""  &&
+
+          isset($_POST['length']) && !empty($_POST['length']) && $_POST['length'] != ""  ){
 
             $height = floatval(  $_POST['height']  );
             $width = floatval(  $_POST['width']  );
@@ -104,6 +108,8 @@ spl_autoload_register(function($class) {
   });
 
 
+  // "product/add" Route , it's a page with ui for adding product
+
   RouteFactory::set("add",function(){
 
     include_once "Vendor/View/addView.php";
@@ -112,6 +118,8 @@ spl_autoload_register(function($class) {
 
   });
 
+
+  // "product/list" Route for listing products
 
   RouteFactory::set("list",function(){
 
@@ -123,7 +131,7 @@ spl_autoload_register(function($class) {
 
   });
 
-
+  // End point for mass delete
   RouteFactory::set("massdelete",function(){
 
     $deleted = [];
@@ -149,6 +157,9 @@ spl_autoload_register(function($class) {
     die();
 
   });
+
+  // Root route , this route redirect to "product/list"
+
   RouteFactory::set("",function(){
 
     $products = Product::getProducts();

@@ -19,6 +19,8 @@ let inputWidth = null;
 let labelLength = null;
 let inputLength = null;
 
+//Capturig the chage in the product to display the right componants
+
 document.querySelector("#type").onchange = function(event) {
     let type = event.currentTarget.value;
 
@@ -144,18 +146,19 @@ document.querySelector("#type").onchange = function(event) {
 
 }
 
-
+//Adding click event tp send data to "/scandiweb/product/addproduct"
 document.querySelector("#save").onclick = function(event) {
     submit.click();
     console.log("Submitted!");
     add('/scandiweb/product/addproduct').then((response) => {
-            return response.text();
+            return response?.text();
         })
         .then((body) => {
             console.log(body);
         });
 
 
+    location.href = "/scandiweb/product/list";
 }
 
 
@@ -169,26 +172,54 @@ async function add(url) {
 
     let formData = new FormData();
 
-    formData.append('sku', skuInput.value);
-    formData.append('name', nameInput.value);
-    formData.append('price', priceInput.value);
-    formData.append('type', typeInput.value);
+    if (skuInput.value && nameInput.value && priceInput.value && typeInput.value) {
 
-    if (typeInput.value == "Book") {
+        formData.append('sku', skuInput.value);
+        formData.append('name', nameInput.value);
+        formData.append('price', priceInput.value);
+        formData.append('type', typeInput.value);
 
-        formData.append('weight', inputWeight.value);
+        if (typeInput.value == "Book") {
 
-    } else if (typeInput.value == "Disc") {
+            if (inputWeight.value) {
 
-        formData.append('size', inputSize.value);
+                formData.append('weight', inputWeight.value);
 
-    } else if (typeInput.value == "Furniture") {
+            } else {
+                return;
+            }
 
-        formData.append('height', inputHeight.value);
-        formData.append('width', inputWidth.value);
-        formData.append('length', inputLength.value);
+        } else if (typeInput.value == "Disc") {
 
+            if (inputSize.value) {
+
+                formData.append('size', inputSize.value);
+
+            } else {
+                return;
+            }
+
+        } else if (typeInput.value == "Furniture") {
+
+            if (inputHeight.value && inputWidth.value && inputLength.value) {
+
+                formData.append('height', inputHeight.value);
+                formData.append('width', inputWidth.value);
+                formData.append('length', inputLength.value);
+
+            } else {
+                return;
+            }
+
+
+        } else {
+            return;
+        }
+
+    } else {
+        return;
     }
+
 
     return await fetch(url, { method: 'POST', body: formData })
 
